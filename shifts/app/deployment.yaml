@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shifts-app
+spec:
+  selector:
+    matchLabels:
+      app: shifts-app
+  template:
+    metadata:
+      labels:
+        app: shifts-app
+    spec:
+      containers:
+        - name: shifts-app
+          image: sample-php-app
+          imagePullPolicy: Always
+          envFrom:
+            - configMapRef:
+                name: services-environment-variable
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "256m"
+          ports:
+            - containerPort: 8080
